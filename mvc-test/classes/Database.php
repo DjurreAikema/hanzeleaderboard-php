@@ -2,25 +2,38 @@
 
 class Database
 {
-    public static $host = '127.0.0.1';
-    public static $dbName = 'hanzeleaderboard';
-    public static $username = 'root';
-    public static $password = '';
+    private $host = '127.0.0.1',
+        $dbName = 'hanzeleaderboard',
+        $username = 'root',
+        $password = '',
+        $pdo = null;
 
-    private static function connect()
+    // TODO Steal from other class
+    private function __construct()
     {
-        $pdo = new PDO("mysql:host=" . self::$host . ";dbname=" . self::$dbName . ";charset=utf8",
-            self::$username,
-            self::$password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
+        try {
+            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName . ";charset=utf8",
+                $this->username,
+                $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
     }
 
-    public static function query($query, $params = array())
+    public function connect()
     {
-        $stmt = self::connect()->prepare($query);
+        if (!isset($this->pdo)) {
+            new Database();
+        }
+        return $this->pdo;
+    }
+
+    public function query($sql, $params = array())
+    {
+        $stmt = $this->connect()->prepare($sql);
         $stmt->execute($params);
-        if (explode(' ', $query)[0] == 'SELECT') {
+        if (explode(' ', $sql)[0] == 'SELECT') {
             return $stmt->fetchAll();
         }
     }
