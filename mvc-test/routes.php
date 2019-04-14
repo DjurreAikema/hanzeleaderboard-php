@@ -1,14 +1,15 @@
 <?php
 
 Route::set('index.php', function () {
-    HomeController::view('index');
+    $controller = new HomeController();
+    $controller->Test();
 });
 
 Route::set('about', function () {
-    HomeController::View('about');
-    HomeController::test();
+    $controller = new HomeController();
+    $controller->Test();
 });
 
 Route::set('contact', function () {
-    echo 'contact us';
+    HomeController::view('index');
 });

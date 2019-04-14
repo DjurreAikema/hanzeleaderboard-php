@@ -2,8 +2,11 @@
 
 class HomeController extends Controller
 {
-    public static function test()
+    public function Test()
     {
-        print_r(Database::query('SELECT * FROM users'));
+        $user = $this->Model('UserModel');
+        $user->name = 'Alex';
+
+        $this->View('index', ['user' => $user]);
     }
 }
