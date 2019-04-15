@@ -9,7 +9,7 @@ class Database
         $pdo = null;
 
     // TODO Steal from other class
-    private function __construct()
+    public function __construct()
     {
         try {
             $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName . ";charset=utf8",
@@ -33,8 +33,7 @@ class Database
     {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute($params);
-        if (explode(' ', $sql)[0] == 'SELECT') {
-            return $stmt->fetchAll();
-        }
+
+        return $stmt;
     }
 }

@@ -1,2 +1,6 @@
 <h3>Index</h3>
-<p>Hello <?=$user->name?></p>
+<?php
+foreach ($users as $user) {
+    echo $user->username.'<br>';
+}
+?>
