@@ -13,7 +13,7 @@ class Model extends Database
 
     }
 
-    public function where()
+    public function find()
     {
 
     }
@@ -23,12 +23,27 @@ class Model extends Database
 
     }
 
-    public function insert()
+    public function where()
+    {
+
+    }
+
+    public function create()
     {
 
     }
 
     public function update()
+    {
+
+    }
+
+    public function createOrUpdate()
+    {
+
+    }
+
+    public function save()
     {
 
     }
