@@ -22,8 +22,9 @@ Route::set('register', function () {
 });
 
 // User routes
-Route::set('profile', function () {
-
+Route::get('profile', function () {
+    UserController::View('user/profile');
+    echo 'hello';
 });
 
 Route::set('update', function () {

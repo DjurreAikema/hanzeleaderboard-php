@@ -1,6 +1,6 @@
 <?php
 
-class Validate
+class OldValidate
 {
     // TODO Have a look at how laravel does this shit for inspiration
     private $_passed = false,
@@ -9,7 +9,7 @@ class Validate
 
     public function __construct()
     {
-        $this->_db = DB::conn();
+        $this->_db = OldDB::conn();
     }
 
     // TODO This function is way too big and ugly

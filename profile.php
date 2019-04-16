@@ -1,12 +1,12 @@
 <?php
 include_once 'core/init.php';
 
-if (!$username = Input::get('user')) {
-    Redirect::to('index.php');
+if (!$username = OldInput::get('OldUser')) {
+    OldRedirect::to('index.php');
 } else {
-    $user = new User($username);
+    $user = new OldUser($username);
     if (!$user->exists()) {
-        Redirect::to(404);
+        OldRedirect::to(404);
     } else {
         $data = $user->data();
 

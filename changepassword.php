@@ -1,14 +1,14 @@
 <?php
 require_once 'core/init.php';
 
-$user = new User();
+$user = new OldUser();
 if (!$user->isLoggedIn()) {
-    Redirect::to('index.php');
+    OldRedirect::to('index.php');
 }
 
-if (Input::exists()) {
-    if (Token::check(Input::get('token'))) {
-        $validate = new Validate();
+if (OldInput::exists()) {
+    if (OldToken::check(OldInput::get('OldToken'))) {
+        $validate = new OldValidate();
         $validation = $validate->check($_POST, array(
             'current_password' => array(
                 'required' => true,
@@ -27,17 +27,17 @@ if (Input::exists()) {
 
         if ($validation->passed()) {
             try {
-                if (Hash::makeHash(Input::get('current_password'), $user->data()->salt) != $user->data()->password) {
+                if (OldHash::makeHash(OldInput::get('current_password'), $user->data()->salt) != $user->data()->password) {
                     echo 'Your current password is wrong';
                 } else {
-                    $salt = Hash::makeSalt(32);
+                    $salt = OldHash::makeSalt(32);
                     $user->update(array(
-                        'password' => Hash::makeHash(Input::get('password_new'), $salt),
+                        'password' => OldHash::makeHash(OldInput::get('password_new'), $salt),
                         'salt' => $salt,
                     ));
 
-                    Session::flash('home', 'Password has been updated');
-                    Redirect::to('index.php');
+                    OldSession::flash('home', 'Password has been updated');
+                    OldRedirect::to('index.php');
                 }
             } catch (Exception $e) {
                 die($e->getMessage());
@@ -64,6 +64,6 @@ if (Input::exists()) {
         <label for="repeat_new_password">Repeat new password:</label>
         <input id="repeat_new_password" type="password" name="repeat_new_password">
     </div>
-    <input type="hidden" name="token" value="<?php echo Token::generate() ?>">
+    <input type="hidden" name="token" value="<?php echo OldToken::generate() ?>">
     <button type="submit">Update</button>
 </form>

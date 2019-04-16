@@ -1,7 +1,7 @@
 <?php
 
 // TODO The hashing needs to be updated it feels very old
-class Hash
+class OldHash
 {
     public static function makeHash($string, $salt = '')
     {

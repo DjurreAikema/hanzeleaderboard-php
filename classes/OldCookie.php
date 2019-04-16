@@ -1,6 +1,6 @@
 <?php
 
-class Cookie
+class OldCookie
 {
     public static function exists($name)
     {

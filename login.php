@@ -1,22 +1,22 @@
 <?php
 require_once 'core/init.php';
 
-if (Input::exists()) {
-    if (Token::check(Input::get('token'))) {
-        $validate = new Validate();
+if (OldInput::exists()) {
+    if (OldToken::check(OldInput::get('OldToken'))) {
+        $validate = new OldValidate();
         $validation = $validate->check($_POST, array(
             'username' => array('required' => true),
             'password' => array('required' => true),
         ));
 
         if ($validation->passed()) {
-            $user = new User();
+            $user = new OldUser();
 
-            $remember = (Input::get('remember') == 'on') ? true : false;
-            $login = $user->login(Input::get('username'), Input::get('password'), $remember);
+            $remember = (OldInput::get('remember') == 'on') ? true : false;
+            $login = $user->login(OldInput::get('username'), OldInput::get('password'), $remember);
 
             if ($login) {
-                Redirect::to('index.php');
+                OldRedirect::to('index.php');
             }
         } else {
             foreach ($validation->errors() as $error) {
@@ -41,6 +41,6 @@ if (Input::exists()) {
             <input type="checkbox" name="remember" id="remember">Remember me
         </label>
     </div>
-    <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+    <input type="hidden" name="token" value="<?php echo OldToken::generate(); ?>">
     <button type="submit">Login</button>
 </form>

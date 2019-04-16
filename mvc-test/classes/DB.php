@@ -1,6 +1,6 @@
 <?php
 
-class Database
+class DB
 {
     private $host = '127.0.0.1',
         $dbName = 'hanzeleaderboard',
@@ -24,7 +24,7 @@ class Database
     public function connect()
     {
         if (!isset($this->pdo)) {
-            new Database();
+            new DB();
         }
         return $this->pdo;
     }

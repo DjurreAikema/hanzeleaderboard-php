@@ -1,6 +1,6 @@
 <?php
 
-class Session
+class OldSession
 {
     public static function exists($name)
     {

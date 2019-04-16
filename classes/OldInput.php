@@ -1,6 +1,6 @@
 <?php
 
-class Input
+class OldInput
 {
     // Checks if any data exists
     public static function exists($type = 'POST')

@@ -4,7 +4,7 @@
 // TODO All the querying functionality should be improved cuz its shit right now
 // TODO This class is getting pretty big
 // TODO Have a look at how laravel does this shit for inspiration
-class DB
+class OldDB
 {
     private static $_conn = null;
     private $_pdo, $_query, $_results, $_count = 0, $_error = false;
@@ -14,9 +14,9 @@ class DB
     {
         try {
             //TODO Improve this code
-            $this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';dbname=' . Config::get('mysql/db') . '',
-                Config::get('mysql/username'),
-                Config::get('mysql/password'));
+            $this->_pdo = new PDO('mysql:host=' . OldConfig::get('mysql/host') . ';dbname=' . OldConfig::get('mysql/db') . '',
+                OldConfig::get('mysql/username'),
+                OldConfig::get('mysql/password'));
         } catch (PDOException $e) {
             // TODO Better error handling
             die($e->getMessage());
@@ -27,7 +27,7 @@ class DB
     public static function conn()
     {
         if (!isset(self::$_conn)) {
-            self::$_conn = new DB();
+            self::$_conn = new OldDB();
         }
         return self::$_conn;
     }

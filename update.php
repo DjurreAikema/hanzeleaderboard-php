@@ -1,14 +1,14 @@
 <?php
 require_once 'core/init.php';
 
-$user = new User();
+$user = new OldUser();
 if (!$user->isLoggedIn()) {
-    Redirect::to('index.php');
+    OldRedirect::to('index.php');
 }
 
-if (Input::exists()) {
-    if (Token::check(Input::get('token'))) {
-        $validate = new Validate();
+if (OldInput::exists()) {
+    if (OldToken::check(OldInput::get('OldToken'))) {
+        $validate = new OldValidate();
         $validation = $validate->check($_POST, array(
             'name' => array(
                 'required' => true,
@@ -18,11 +18,11 @@ if (Input::exists()) {
         if ($validation->passed()) {
             try {
                 $user->update(array(
-                    'name' => Input::get('name')
+                    'name' => OldInput::get('name')
                 ));
 
-                Session::flash('home', 'Details have been updated');
-                Redirect::to('index.php');
+                OldSession::flash('home', 'Details have been updated');
+                OldRedirect::to('index.php');
             } catch (Exception $e) {
                 die($e->getMessage());
             }
@@ -40,6 +40,6 @@ if (Input::exists()) {
         <label for="name">Name</label>
         <input id="name" type="text" name="name" value="<?php echo escape($user->data()->name) ?>">
     </div>
-    <input type="hidden" name="token" value="<?php echo Token::generate() ?>">
+    <input type="hidden" name="token" value="<?php echo OldToken::generate() ?>">
     <button type="submit">Update</button>
 </form>

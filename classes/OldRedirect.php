@@ -1,6 +1,6 @@
 <?php
 
-class Redirect
+class OldRedirect
 {
     public static function to($location = null)
     {

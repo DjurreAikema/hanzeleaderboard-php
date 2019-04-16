@@ -1,6 +1,6 @@
 <?php
 
-class Model extends Database
+class Model extends DB
 {
     public function all()
     {

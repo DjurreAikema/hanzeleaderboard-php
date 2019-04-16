@@ -1,6 +1,6 @@
 <?php
 
-class Config
+class OldConfig
 {
     public static function get($path = null)
     {
@@ -9,7 +9,7 @@ class Config
         }
 
         // TODO Check if value is actually in the config
-        $config = $GLOBALS['config'];
+        $config = $GLOBALS['OldConfig'];
         $path = explode('/', $path);
         foreach ($path as $bit) {
             if (isset($config[$bit])) {

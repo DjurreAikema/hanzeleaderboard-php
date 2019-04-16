@@ -2,9 +2,9 @@
 require_once 'core/init.php';
 
 // TODO make the validation input a lot shorter
-if (Input::exists()) {
-    if (Token::check(Input::get('token'))) {
-        $validate = new Validate();
+if (OldInput::exists()) {
+    if (OldToken::check(OldInput::get('OldToken'))) {
+        $validate = new OldValidate();
         $validation = $validate->check($_POST, array(
             'username' => array(
                 'required' => true,
@@ -23,14 +23,14 @@ if (Input::exists()) {
         ));
 
         if ($validation->passed()) {
-            $user = new User();
-            $salt = Hash::makeSalt(32);
+            $user = new OldUser();
+            $salt = OldHash::makeSalt(32);
 
             try {
                 $user->create(array(
                    //'email' => ,
-                   'username' => Input::get('username'),
-                   'password' => Hash::makeHash(Input::get('password'), $salt),
+                   'username' => OldInput::get('username'),
+                   'password' => OldHash::makeHash(OldInput::get('password'), $salt),
                    'salt' => $salt,
                    //'name' => '',
                    'joined' => date('Y-m-d H:i:s'),
@@ -38,8 +38,8 @@ if (Input::exists()) {
                 ));
 
                 // TODO Something like redirect withFlash
-                Session::flash('home', 'You have been registered and can now login');
-                Redirect::to(404);
+                OldSession::flash('home', 'You have been registered and can now login');
+                OldRedirect::to(404);
             } catch (Exception $e) {
                 // TODO Better error handling
                 die($e->getMessage());
@@ -56,7 +56,7 @@ if (Input::exists()) {
 <form action="" method="POST">
     <div class="field">
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="<?php echo escape(Input::get('username')) ?>"
+        <input type="text" name="username" id="username" value="<?php echo escape(OldInput::get('username')) ?>"
                autocomplete="off">
     </div>
     <div class="field">
@@ -68,6 +68,6 @@ if (Input::exists()) {
         <input type="password" name="password2" id="password2" value="">
     </div>
     <!-- TODO Make this sexier -->
-    <input type="hidden" name="token" value="<?php echo Token::generate() ?>">
+    <input type="hidden" name="token" value="<?php echo OldToken::generate() ?>">
     <button type="submit">Submit</button>
 </form>

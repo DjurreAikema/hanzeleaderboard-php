@@ -1,22 +1,22 @@
 <?php
 
-class User
+class OldUser
 {
     // TODO Have a look at how laravel does this shit for inspiration
     private $_db, $_data, $_sessionName, $_cookieName, $_isLoggedIn;
 
     public function __construct($user = null)
     {
-        $this->_db = DB::conn();
+        $this->_db = OldDB::conn();
 
         // TODO Whats the point of this session name?
-        $this->_sessionName = Config::get('session/session_name');
-        $this->_cookieName = Config::get('remember/cookie_name');
+        $this->_sessionName = OldConfig::get('session/session_name');
+        $this->_cookieName = OldConfig::get('remember/cookie_name');
 
         // TODO This code is ugly af
         if (!$user) {
-            if (Session::exists($this->_sessionName)) {
-                $user = Session::get($this->_sessionName);
+            if (OldSession::exists($this->_sessionName)) {
+                $user = OldSession::get($this->_sessionName);
 
                 if ($this->find($user)) {
                     $this->_isLoggedIn = true;
@@ -66,28 +66,28 @@ class User
     {
         //Check if someone is trying to log in with remember me functionality
         if (!$username && !$password && $this->exists()) {
-            Session::put($this->_sessionName, $this->data()->id);
+            OldSession::put($this->_sessionName, $this->data()->id);
         } else {
             $user = $this->find($username);
 
             if ($user) {
-                if ($this->data()->password == Hash::makeHash($password, $this->data()->salt)) {
-                    Session::put($this->_sessionName, $this->data()->id);
+                if ($this->data()->password == OldHash::makeHash($password, $this->data()->salt)) {
+                    OldSession::put($this->_sessionName, $this->data()->id);
 
                     // TODO Make this its own method
                     if ($remember) {
-                        $hash = Hash::unique();
+                        $hash = OldHash::unique();
                         $hashCheck = $this->_db->get('user_sessions', array('user_id', '=', $this->data()->id));
                         if (!$hashCheck->count()) {
                             $this->_db->insert('user_sessions', array(
                                 'user_id' => $this->data()->id,
-                                'hash' => $hash
+                                'OldHash' => $hash
                             ));
                         } else {
                             $hash = $hashCheck->first()->hash;
                         }
 
-                        Cookie::put($this->_cookieName, $hash, Config::get('remember/cookie_expiry'));
+                        OldCookie::put($this->_cookieName, $hash, OldConfig::get('remember/cookie_expiry'));
                     }
 
                     return true;
@@ -121,8 +121,8 @@ class User
     {
         $this->_db->delete('user_sessions', array('user_id', '=', $this->data()->id));
 
-        Session::delete($this->_sessionName);
-        Cookie::delete($this->_cookieName);
+        OldSession::delete($this->_sessionName);
+        OldCookie::delete($this->_cookieName);
     }
 
     // TODO Make this like laravel somehow

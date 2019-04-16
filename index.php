@@ -2,11 +2,11 @@
 require_once 'core/init.php';
 
 // TODO Make this sexier
-if (Session::exists('home')) {
-    echo Session::flash('home');
+if (OldSession::exists('home')) {
+    echo OldSession::flash('home');
 }
 
-$user = new User();
+$user = new OldUser();
 if ($user->isLoggedIn()) {
     ?>
     <p>Hello
